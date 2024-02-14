@@ -96,9 +96,9 @@ public class WebSecurityConfig{
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
-        configuration.setAllowedOrigins(Arrays.asList("*"/*, "https://localhost:3000", "https://acms-backend.onrender.com"*/));
+        configuration.setAllowedOrigins(Arrays.asList("*","https://react-atelier.onrender.com/"/*, "https://localhost:3000", "https://acms-backend.onrender.com"*/));
         configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS"));
-        configuration.setAllowedHeaders(Arrays.asList("*"));
+        configuration.setAllowedHeaders(Arrays.asList("*","https://react-atelier.onrender.com/"));
         configuration.setAllowCredentials(true);
 
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
