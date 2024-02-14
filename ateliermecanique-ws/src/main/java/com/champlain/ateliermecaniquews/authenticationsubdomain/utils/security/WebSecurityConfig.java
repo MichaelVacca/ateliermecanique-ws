@@ -76,7 +76,7 @@ public class WebSecurityConfig{
 //                                        .csrf(AbstractHttpConfigurer::disable);
 
 
-        
+
         http
                 .cors(cors -> cors
                         // Configuration options, for example:
@@ -89,7 +89,7 @@ public class WebSecurityConfig{
                 .requestMatchers("/api/v1/content/**").permitAll()
                 .requestMatchers("/api/v1/reviews").permitAll()
                 .requestMatchers("/api/v1/test/**").permitAll()
-                .anyRequest().permitAll()/*.authenticated()*/
+                .anyRequest().authenticated()
         ).csrf(AbstractHttpConfigurer::disable);
 
 
