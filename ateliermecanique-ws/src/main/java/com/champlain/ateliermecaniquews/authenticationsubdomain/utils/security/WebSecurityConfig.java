@@ -74,6 +74,9 @@ public class WebSecurityConfig{
 //                                .anyRequest().authenticated()
 //                )
 //                                        .csrf(AbstractHttpConfigurer::disable);
+
+
+        
         http
                 .cors(cors -> cors
                         // Configuration options, for example:
