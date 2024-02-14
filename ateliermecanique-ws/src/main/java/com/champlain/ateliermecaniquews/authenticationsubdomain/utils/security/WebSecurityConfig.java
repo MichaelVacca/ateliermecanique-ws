@@ -61,27 +61,33 @@ public class WebSecurityConfig{
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+//        http
+//                .cors(cors-> cors.configurationSource(corsConfigurationSource()))
+//                .exceptionHandling(exception -> exception.authenticationEntryPoint(unauthorizedHandler))
+//                .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+//                .authorizeHttpRequests(auth ->
+//                        auth.
+//                                requestMatchers("/api/v1/auth/**").permitAll()
+//                                .requestMatchers("/api/v1/content/**").permitAll()
+//                                .requestMatchers("/api/v1/reviews").permitAll()
+//                                .requestMatchers("/api/v1/test/**").permitAll() // Added this line
+//                                .anyRequest().authenticated()
+//                )
+//                                        .csrf(AbstractHttpConfigurer::disable);
         http
-                .cors(cors-> cors.configurationSource(corsConfigurationSource()))
-                .exceptionHandling(exception -> exception.authenticationEntryPoint(unauthorizedHandler))
-                .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-                .authorizeHttpRequests(auth ->
-                        auth.
-                                requestMatchers("/api/v1/auth/**").permitAll()
-                                .requestMatchers("/api/v1/content/**").permitAll()
-                                .requestMatchers("/api/v1/reviews").permitAll()
-                                .requestMatchers("/api/v1/test/**").permitAll() // Added this line
-                                .anyRequest().authenticated()
+                .cors(cors -> cors
+                        // Configuration options, for example:
+                        .configurationSource(request -> new CorsConfiguration().applyPermitDefaultValues())
                 )
-                                        .csrf(AbstractHttpConfigurer::disable);
-//        http.authorizeHttpRequests(auth -> auth
-//                .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll() // Allow OPTIONS requests
-//                .requestMatchers("/api/v1/auth/**").permitAll()
-//                .requestMatchers("/api/v1/content/**").permitAll()
-//                .requestMatchers("/api/v1/reviews").permitAll()
-//                .requestMatchers("/api/v1/test/**").permitAll()
-//                .anyRequest().authenticated()
-//        );
+
+                .authorizeHttpRequests(auth -> auth
+                .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll() // Allow OPTIONS requests
+                .requestMatchers("/api/v1/auth/**").permitAll()
+                .requestMatchers("/api/v1/content/**").permitAll()
+                .requestMatchers("/api/v1/reviews").permitAll()
+                .requestMatchers("/api/v1/test/**").permitAll()
+                .anyRequest().authenticated()
+        ).csrf(AbstractHttpConfigurer::disable);
 
 
         http.authenticationProvider(authenticationProvider());
