@@ -15,11 +15,22 @@ function Home() {
           } 
         }
       })
-      .catch(error => {
-        console.error('Error fetching public content:', error);
-        setPublicContent(false);
-        setMessage(error.response.data);
-      });
+        .catch(error => {
+            console.error('Error fetching public content:', error);
+            setPublicContent(false);
+
+            if (error.response) {
+                // The request was made and the server responded with a status code
+                // that falls out of the range of 2xx
+                setMessage(error.response.data);
+            } else if (error.request) {
+                // The request was made but no response was received
+                setMessage("No response from the server. Please check your network or contact the server administrator.");
+            } else {
+                // Something happened in setting up the request that triggered an Error
+                setMessage("Error: " + error.message);
+            }
+        });
   }, []); 
 
   return (
