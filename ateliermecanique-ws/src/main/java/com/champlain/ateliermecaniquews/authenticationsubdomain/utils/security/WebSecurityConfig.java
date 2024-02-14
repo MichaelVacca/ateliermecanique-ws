@@ -86,7 +86,7 @@ public class WebSecurityConfig{
                 .requestMatchers("/api/v1/content/**").permitAll()
                 .requestMatchers("/api/v1/reviews").permitAll()
                 .requestMatchers("/api/v1/test/**").permitAll()
-                .anyRequest().authenticated()
+                .anyRequest().permitAll()/*.authenticated()*/
         ).csrf(AbstractHttpConfigurer::disable);
 
 
