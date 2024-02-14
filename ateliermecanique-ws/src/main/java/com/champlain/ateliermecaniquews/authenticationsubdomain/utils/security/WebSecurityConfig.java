@@ -6,6 +6,7 @@ import com.champlain.ateliermecaniquews.authenticationsubdomain.utils.security.s
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
@@ -60,19 +61,28 @@ public class WebSecurityConfig{
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-        http
-                .cors(cors-> cors.configurationSource(corsConfigurationSource()))
-                .exceptionHandling(exception -> exception.authenticationEntryPoint(unauthorizedHandler))
-                .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-                .authorizeHttpRequests(auth ->
-                        auth.
-                                requestMatchers("/api/v1/auth/**").permitAll()
-                                .requestMatchers("/api/v1/content/**").permitAll()
-                                .requestMatchers("/api/v1/reviews").permitAll()
-                                .requestMatchers("/api/v1/test/**").permitAll() // Added this line
-                                .anyRequest().authenticated()
-                )
-                                        .csrf(AbstractHttpConfigurer::disable);
+//        http
+//                .cors(cors-> cors.configurationSource(corsConfigurationSource()))
+//                .exceptionHandling(exception -> exception.authenticationEntryPoint(unauthorizedHandler))
+//                .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+//                .authorizeHttpRequests(auth ->
+//                        auth.
+//                                requestMatchers("/api/v1/auth/**").permitAll()
+//                                .requestMatchers("/api/v1/content/**").permitAll()
+//                                .requestMatchers("/api/v1/reviews").permitAll()
+//                                .requestMatchers("/api/v1/test/**").permitAll() // Added this line
+//                                .anyRequest().authenticated()
+//                )
+//                                        .csrf(AbstractHttpConfigurer::disable);
+        http.authorizeHttpRequests(auth -> auth
+                .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll() // Allow OPTIONS requests
+                .requestMatchers("/api/v1/auth/**").permitAll()
+                .requestMatchers("/api/v1/content/**").permitAll()
+                .requestMatchers("/api/v1/reviews").permitAll()
+                .requestMatchers("/api/v1/test/**").permitAll()
+                .anyRequest().authenticated()
+        );
+
 
         http.authenticationProvider(authenticationProvider());
 
