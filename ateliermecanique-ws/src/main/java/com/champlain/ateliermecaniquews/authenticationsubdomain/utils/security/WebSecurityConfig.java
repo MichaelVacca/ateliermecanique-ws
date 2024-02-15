@@ -79,7 +79,6 @@ public class WebSecurityConfig{
 
         http
                 .cors(cors -> cors
-                        // Configuration options, for example:
                         .configurationSource(request -> new CorsConfiguration().applyPermitDefaultValues())
                 )
 
